@@ -85,7 +85,7 @@ public class PersonFacade implements IPersonFacade
     @Override
     public RoleSchool addRole(String json, int id) throws NotFoundException
     {
-        RoleSchool rs = gson.fromJson(json, RoleSchool.class);
+        RoleSchool role = gson.fromJson(json, RoleSchool.class);
         Person p = em.find(Person.class, id);
         if (p == null)
         {
@@ -94,14 +94,16 @@ public class PersonFacade implements IPersonFacade
         em.getTransaction().begin();
         try
         {
-            p.addRole(rs);
+            em.persist(role);
+            role.setPerson(p);
+            p.addRole(role);
             em.getTransaction().commit();
         } catch (Exception e)
         {
             em.getTransaction().rollback();
-            rs = null;
+            role = null;
         }
-        return rs;
+        return role;
     }
 
     @Override

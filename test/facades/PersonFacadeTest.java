@@ -2,6 +2,8 @@ package facades;
 
 import com.google.gson.Gson;
 import entity.Person;
+import entity.RoleSchool;
+import entity.Teacher;
 import exceptions.NotFoundException;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +65,15 @@ public class PersonFacadeTest {
 
     @Test
     public void testAddRole() throws Exception {
-        fail("Not tested yet");
+        Person person = facade.addPerson(gson.toJson(new Person("bbb", "bbb", "bbb", "bbb")));
+        RoleSchool role = new Teacher("Physics");
+        role.setRoleName("Teacher");
+        facade.addRole(gson.toJson(role), person.getId());
+        String personAsJSON = facade.getPersonAsJSON(person.getId());
+        Person fromJson = gson.fromJson(personAsJSON, Person.class);
+        RoleSchool getRole = fromJson.getRoles().get(0);
+        assertEquals(role.getId(), getRole.getId());
+        
     }
 
     @Test(expected = NotFoundException.class)
