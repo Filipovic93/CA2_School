@@ -6,10 +6,12 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -32,6 +34,8 @@ public class Person implements Serializable, Comparable<Person> {
     private String lastName;
     private String phone;
     private String email;
+    @OneToMany(mappedBy = "person")
+    private Collection<RoleSchool> roles;
 
     public Person() {
     }
