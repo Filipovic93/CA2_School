@@ -1,3 +1,5 @@
+package facades;
+
 import com.google.gson.Gson;
 import exceptions.NotFoundException;
 import java.util.HashMap;
@@ -10,12 +12,12 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class PersonFacadeTest {
+public class PersonFacadeMockTest {
 
     PersonMockFacade facade;
     Gson gson = new Gson();
 
-    public PersonFacadeTest() {
+    public PersonFacadeMockTest() {
     }
 
     @Before

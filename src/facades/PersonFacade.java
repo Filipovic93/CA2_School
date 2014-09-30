@@ -15,6 +15,7 @@ import java.util.Collection;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 /**
  *
@@ -31,7 +32,7 @@ public class PersonFacade implements IPersonFacade
 
     private PersonFacade()
     {
-        this.emf = Persistence.createEntityManagerFactory("RestCRUDPU");
+        this.emf = Persistence.createEntityManagerFactory("CA2-SchoolPU");
         this.em = emf.createEntityManager();
         this.gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
@@ -49,7 +50,7 @@ public class PersonFacade implements IPersonFacade
     @Override
     public String getPersonsAsJSON()
     {
-        Collection<Person> resultList = em.createNamedQuery("Person.findAll").getResultList();
+        Collection<Person> resultList = em.createQuery("SELECT p FROM Person p").getResultList();
         return gson.toJson(resultList);
     }
 
@@ -122,6 +123,17 @@ public class PersonFacade implements IPersonFacade
             p = null;
         }
         return p;
+    }
+    
+    public void clearTablesForTesting() {
+        try {
+            em.getTransaction().begin();
+            Query q3 = em.createNativeQuery("DELETE FROM PERSON");
+            q3.executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import org.junit.After;
@@ -16,34 +15,33 @@ import static org.junit.Assert.*;
  * @author Filipovic
  */
 public class TeacherTest {
-    
+
     private Teacher t;
-    
-    
+
     public TeacherTest() {
     }
-    
+
     @Before
     public void setUp() {
-            t = new Teacher ("Philosophy"); 
+        t = new Teacher("Philosophy");
     }
-    
+
     @After
     public void tearDown() {
-  
+
     }
 
     @Test
     public void testGetDegree() {
-       String deg = t.getDegree();
+        String deg = t.getDegree();
         assertEquals(deg, "Philosophy");
     }
 
     @Test
     public void testSetDegree() {
-      String deg = ("Philosophy");
-      t.setDegree(deg);
-        assertEquals(deg, "Philosophy");
+        String deg = ("Computer Science");
+        t.setDegree(deg);
+        assertEquals(deg, t.getDegree());
     }
-    
+
 }
