@@ -73,7 +73,6 @@ public class PersonFacadeTest {
         Person fromJson = gson.fromJson(personAsJSON, Person.class);
         RoleSchool getRole = fromJson.getRoles().get(0);
         assertEquals(role.getId(), getRole.getId());
-        
     }
 
     @Test(expected = NotFoundException.class)

@@ -41,8 +41,9 @@ public class Person implements Serializable, Comparable<Person> {
     private String phone;
     @Expose
     private String email;
-    @OneToMany(mappedBy = "person")
+    
     @Expose
+    @OneToMany(mappedBy = "person")
     private final Collection<RoleSchool> roles = new ArrayList<>();
 
     public Person() {
