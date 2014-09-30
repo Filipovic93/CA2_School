@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
@@ -18,16 +17,17 @@ import javax.persistence.SequenceGenerator;
  * @author Filipovic
  */
 @Entity
-public class Person implements Serializable {
+public class Person implements Serializable, Comparable<Person> {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "s1")
-    @SequenceGenerator(name = "s1", 
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "s1")
+    @SequenceGenerator(name = "s1",
                        sequenceName = "PERSON_SEQ",
-                       initialValue = 0, 
-                       allocationSize=1)
-    
-    private Long id;
+                       initialValue = 0,
+                       allocationSize = 1)
+
+    private int id;
     private String firstName;
     private String lastName;
     private String phone;
@@ -35,7 +35,6 @@ public class Person implements Serializable {
 
     public Person() {
     }
-    
 
     public Person(String firstName, String lastName, String phone, String email) {
         this.firstName = firstName;
@@ -76,12 +75,18 @@ public class Person implements Serializable {
         this.email = email;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
-    
+
+    @Override
+    public int compareTo(Person o) {
+        Person p = (Person) o;
+        return this.getId() - p.getId();
+    }
+
 }
