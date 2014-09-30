@@ -7,7 +7,9 @@ package entity;
 
 import com.google.gson.annotations.Expose;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,7 +44,7 @@ public class Person implements Serializable, Comparable<Person>
     private String email;
     @OneToMany(mappedBy = "person")
     @Expose
-    private Collection<RoleSchool> roles;
+    private Collection<RoleSchool> roles = new ArrayList<>();
 
     public Person()
     {
@@ -117,5 +119,10 @@ public class Person implements Serializable, Comparable<Person>
     {
        roles.add(rs);
     }
+    
+    public List<RoleSchool> getRoles(){
+        return (List<RoleSchool>) roles;
+    }
+    
 
 }

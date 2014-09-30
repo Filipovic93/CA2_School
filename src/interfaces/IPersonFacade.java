@@ -13,16 +13,16 @@ import exceptions.NotFoundException;
  *
  * @author Neno
  */
-public interface personInterface
+public interface IPersonFacade
 {
 
     String getPersonsAsJSON();
 
-    String getPersonAsJson(int id) throws NotFoundException;
+    String getPersonAsJSON(int id) throws NotFoundException;
 
-    Person addPersonFromGson(String json);
+    Person addPerson(String json);
 
-    RoleSchool addRoleFromGson(String json, int id) throws NotFoundException;
+    RoleSchool addRole(String json, int id) throws NotFoundException;
 
     Person delete(int id) throws NotFoundException;
 

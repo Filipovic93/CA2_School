@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class RoleSchool implements Serializable {
+public class RoleSchool implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @ManyToOne

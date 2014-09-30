@@ -10,7 +10,7 @@ import com.google.gson.GsonBuilder;
 import entity.Person;
 import entity.RoleSchool;
 import exceptions.NotFoundException;
-import interfaces.personInterface;
+import interfaces.IPersonFacade;
 import java.util.Collection;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,16 +20,16 @@ import javax.persistence.Persistence;
  *
  * @author Neno
  */
-public class personFacade implements personInterface
+public class PersonFacade implements IPersonFacade
 {
 
-    private static personFacade instance;
+    private static PersonFacade instance;
 
     private final EntityManagerFactory emf;
     private final EntityManager em;
     private final Gson gson;
 
-    private personFacade()
+    private PersonFacade()
     {
         this.emf = Persistence.createEntityManagerFactory("RestCRUDPU");
         this.em = emf.createEntityManager();
@@ -37,11 +37,11 @@ public class personFacade implements personInterface
 
     }
 
-    public static personFacade getFacade()
+    public static PersonFacade getFacade()
     {
         if (instance == null)
         {
-            instance = new personFacade();
+            instance = new PersonFacade();
         }
         return instance;
     }
@@ -54,7 +54,7 @@ public class personFacade implements personInterface
     }
 
     @Override
-    public String getPersonAsJson(int id) throws NotFoundException
+    public String getPersonAsJSON(int id) throws NotFoundException
     {
         Person p = em.find(Person.class, id);
         if (p == null)
@@ -65,7 +65,7 @@ public class personFacade implements personInterface
     }
 
     @Override
-    public Person addPersonFromGson(String json)
+    public Person addPerson(String json)
     {
         Person p = gson.fromJson(json, Person.class);
         em.getTransaction().begin();
@@ -82,7 +82,7 @@ public class personFacade implements personInterface
     }
 
     @Override
-    public RoleSchool addRoleFromGson(String json, int id) throws NotFoundException
+    public RoleSchool addRole(String json, int id) throws NotFoundException
     {
         RoleSchool rs = gson.fromJson(json, RoleSchool.class);
         Person p = em.find(Person.class, id);
