@@ -1,5 +1,6 @@
 package entity;
 
+import com.google.gson.annotations.Expose;
 import javax.persistence.Entity;
 
 /**
@@ -10,6 +11,7 @@ import javax.persistence.Entity;
 
 public class Teacher extends RoleSchool {
 
+    @Expose
     private String degree;
 
     public Teacher() {
