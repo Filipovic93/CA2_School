@@ -9,9 +9,11 @@ import entity.Person;
 import entity.RoleSchool;
 import entity.Student;
 import entity.Teacher;
+import java.io.IOException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import rest.WebService;
 
 /**
  *
@@ -45,9 +47,15 @@ public class test {
         System.out.println(p2.getRoles().size());
         
     }
+    
+    public static void server() throws IOException
+    {
+        new WebService(8080).start();
+    }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new test().tester();
+        server();
     }
 
 }
