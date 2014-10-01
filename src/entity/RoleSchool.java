@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.ManyToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -22,8 +21,8 @@ public class RoleSchool implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ManyToOne
-    private Person person;
+    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -38,13 +37,6 @@ public class RoleSchool implements Serializable {
         this.roleName = roleName;
     }
 
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
 
     public int getId() {
         return id;

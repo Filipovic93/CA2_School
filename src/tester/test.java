@@ -38,9 +38,7 @@ public class test {
         em.persist(role2);
         em.persist(role1);
         role1.setRoleName("Teacher");
-        role1.setPerson(p2);
         role2.setRoleName("Student");
-        role2.setPerson(p2);
         p2.addRole(role1);
         p2.addRole(role2);
         em.getTransaction().commit();

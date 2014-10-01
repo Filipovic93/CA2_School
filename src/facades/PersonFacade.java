@@ -7,8 +7,11 @@ package facades;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import entity.AssistentTeacher;
 import entity.Person;
 import entity.RoleSchool;
+import entity.Student;
+import entity.Teacher;
 import exceptions.NotFoundException;
 import interfaces.IPersonFacade;
 import java.util.Collection;
@@ -16,13 +19,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import org.json.JSONObject;
 
 /**
  *
  * @author Neno
  */
-public class PersonFacade implements IPersonFacade
-{
+public class PersonFacade implements IPersonFacade {
 
     private static PersonFacade instance;
 
@@ -30,52 +33,43 @@ public class PersonFacade implements IPersonFacade
     private final EntityManager em;
     private final Gson gson;
 
-    private PersonFacade()
-    {
+    private PersonFacade() {
         this.emf = Persistence.createEntityManagerFactory("CA2-SchoolPU");
         this.em = emf.createEntityManager();
         this.gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
     }
 
-    public static PersonFacade getFacade()
-    {
-        if (instance == null)
-        {
+    public static PersonFacade getFacade() {
+        if (instance == null) {
             instance = new PersonFacade();
         }
         return instance;
     }
 
     @Override
-    public String getPersonsAsJSON()
-    {
+    public String getPersonsAsJSON() {
         Collection<Person> resultList = em.createQuery("SELECT p FROM Person p").getResultList();
         return gson.toJson(resultList);
     }
 
     @Override
-    public String getPersonAsJSON(int id) throws NotFoundException
-    {
+    public String getPersonAsJSON(int id) throws NotFoundException {
         Person p = em.find(Person.class, id);
-        if (p == null)
-        {
+        if (p == null) {
             throw new NotFoundException("No person exists for the given id");
         }
         return gson.toJson(p);
     }
 
     @Override
-    public Person addPerson(String json)
-    {
+    public Person addPerson(String json) {
         Person p = gson.fromJson(json, Person.class);
         em.getTransaction().begin();
-        try
-        {
+        try {
             em.persist(p); // persist should put to database and automatically give an id
             em.getTransaction().commit();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             em.getTransaction().rollback();
             p = null;
         }
@@ -83,23 +77,30 @@ public class PersonFacade implements IPersonFacade
     }
 
     @Override
-    public RoleSchool addRole(String json, int id) throws NotFoundException
-    {
-        RoleSchool role = gson.fromJson(json, RoleSchool.class);
+    public RoleSchool addRole(String json, int id) throws NotFoundException {
+        JSONObject jObj = new JSONObject(json);
+        String roleName = jObj.getString("roleName");
+        RoleSchool role = null;
+        if (roleName.equalsIgnoreCase("Teacher")) {
+            role = new Teacher(jObj.getString("degree"));
+        } else if (roleName.equalsIgnoreCase("Student")) {
+            role = new Student(jObj.getString("semester"));
+        } else if (roleName.equalsIgnoreCase("AssistentTeacher")) {
+            role = new AssistentTeacher();
+        }
         Person p = em.find(Person.class, id);
-        if (p == null)
-        {
+        if (p == null) {
             throw new NotFoundException("No person exists for the given id");
         }
+        if (role == null) {
+            throw new NotFoundException("No role exist for the given rolename");
+        }
         em.getTransaction().begin();
-        try
-        {
+        try {
             em.persist(role);
-            role.setPerson(p);
             p.addRole(role);
             em.getTransaction().commit();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             em.getTransaction().rollback();
             role = null;
         }
@@ -107,26 +108,22 @@ public class PersonFacade implements IPersonFacade
     }
 
     @Override
-    public Person delete(int id) throws NotFoundException
-    {
+    public Person delete(int id) throws NotFoundException {
         Person p = em.find(Person.class, id);
-        if (p == null)
-        {
+        if (p == null) {
             throw new NotFoundException("No person exists for the given id");
         }
         em.getTransaction().begin();
-        try
-        {
+        try {
             em.remove(p);
             em.getTransaction().commit();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             em.getTransaction().rollback();
             p = null;
         }
         return p;
     }
-    
+
     public void clearTablesForTesting() {
         try {
             em.getTransaction().begin();

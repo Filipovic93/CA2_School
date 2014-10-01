@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
@@ -41,9 +42,10 @@ public class Person implements Serializable, Comparable<Person> {
     private String phone;
     @Expose
     private String email;
-    
+
     @Expose
-    @OneToMany(mappedBy = "person")
+    @OneToMany
+    @JoinColumn
     private final Collection<RoleSchool> roles = new ArrayList<>();
 
     public Person() {
@@ -97,9 +99,8 @@ public class Person implements Serializable, Comparable<Person> {
     }
 
     @Override
-    public int compareTo(Person o) {
-        Person p = (Person) o;
-        return this.getId() - p.getId();
+    public int compareTo(Person other) {
+        return this.getId() - other.getId();
     }
 
     public void addRole(RoleSchool rs) {
