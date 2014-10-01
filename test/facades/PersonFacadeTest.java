@@ -16,6 +16,12 @@ import static org.junit.Assert.*;
  *
  * @author jakobgaardandersen
  */
+
+// Når vi kører testen, så opstår der nogle gange fejl pga. at vi i vores setup
+// klasse clearer alle tabeller og det tager noget tid og så starter nogle af
+// de test vi har lavet og fejler.
+
+
 public class PersonFacadeTest {
 
     PersonFacade facade = PersonFacade.getFacade();
@@ -25,7 +31,7 @@ public class PersonFacadeTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws InterruptedException {
         facade.clearTablesForTesting();
         // clear the database before each test
     }
