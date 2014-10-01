@@ -84,7 +84,8 @@
         else{
           $("#fname").attr("disabled","disabled");
           $("#lname").attr("disabled","disabled");
-          $("#phone").attr("disabled","dsiabled");
+          $("#phone").attr("disabled","disabled");
+          $("#email").attr("disabled","disabled");
           $("#btn_save").attr("disabled","disabled");
           $("#btn_cancel").attr("disabled","disabled");
           $("#btn_add").removeAttr("disabled");
