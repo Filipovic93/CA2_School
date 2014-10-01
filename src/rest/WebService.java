@@ -1,12 +1,14 @@
 package rest;
 
 import com.google.gson.Gson;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import entity.Person;
 import exceptions.NotFoundException;
 import facades.PersonFacade;
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,6 +32,7 @@ public class WebService
     private final HttpServer server;
 
     private PersonFacade facade;
+    private String contentFolder = "public/";
 
     public WebService(int port) throws IOException
     {
@@ -37,6 +40,7 @@ public class WebService
         server.bind(new InetSocketAddress(port), 0);
         server.createContext("/person", createPersonHandler());
         server.createContext("/files", createFileHandler());
+        server.createContext("/", createStartpageHandler());
         facade = PersonFacade.getFacade();
 
     }
@@ -170,15 +174,17 @@ public class WebService
                     return;
                 }
 
-                String fileName = matcher.group(1);
+                String fileName = contentFolder + matcher.group(1);
 
                 File file = new File(fileName);
+                String extension = fileName.substring(fileName.lastIndexOf("."));
 
                 if (!file.exists())
                 {
                     error(he, 404, "File not found");
                     return;
                 }
+                he.getResponseHeaders().set("Content-Type", getMime(extension));
                 he.sendResponseHeaders(200, 0);
                 FileInputStream in = new FileInputStream(file);
                 byte[] buffer = new byte[4096];
@@ -196,6 +202,64 @@ public class WebService
                 }
             }
 
+            private String getMime(String extension)
+            {
+                String mime = "";
+                switch (extension)
+                {
+                    case ".pdf":
+                        mime = "application/pdf";
+                        break;
+                    case ".png":
+                        mime = "image/png";
+                    case ".css":
+                        mime = "text/css";
+                        break;
+                    case ".js":
+                        mime = "text/javascript";
+                        break;
+                    case ".html":
+                        mime = "text/html";
+                        break;
+                    case ".jar":
+                        mime = "application/java-archive";
+                        break;
+                }
+                return mime;
+            }
+
+        };
+    }
+
+    private HttpHandler createStartpageHandler()
+    {
+
+        return new HttpHandler()
+        {
+            @Override
+            public void handle(HttpExchange he) throws IOException
+            {
+                String path = contentFolder + "index.html";
+                File file = new File(path);
+                byte[] bytesToSend = new byte[(int) file.length()];
+                try
+                {
+                    BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+                    bis.read(bytesToSend, 0, bytesToSend.length);
+                } catch (IOException ie)
+                {
+                    ie.printStackTrace();
+                }
+                String contentType = "text/html";
+                Headers h = he.getResponseHeaders();
+                h.add("Content-Type", contentType);
+                he.sendResponseHeaders(200, bytesToSend.length);
+                try (OutputStream os = he.getResponseBody())
+                {
+                    os.write(bytesToSend, 0, bytesToSend.length);
+
+                }
+            }
         };
     }
 
