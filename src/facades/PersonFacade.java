@@ -132,11 +132,13 @@ public class PersonFacade implements IPersonFacade {
             Query q3 = em.createNativeQuery("DELETE FROM STUDENT");
             Query q4 = em.createNativeQuery("DELETE FROM TEACHER");
             Query q5 = em.createNativeQuery("DELETE FROM ASSISTENTTEACHER");
-            q1.executeUpdate();
-            q2.executeUpdate();
+            
+            
             q3.executeUpdate();
             q4.executeUpdate();
             q5.executeUpdate();
+            q2.executeUpdate();
+            q1.executeUpdate();
             em.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
