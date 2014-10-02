@@ -16,8 +16,8 @@ import javax.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class RoleSchool implements Serializable {
-// Should be an abstract class.
+public  class RoleSchool implements Serializable {
+// Should be an abstract class. But test fails if is.
 
     private static final long serialVersionUID = 1L;
 

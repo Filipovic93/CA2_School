@@ -71,6 +71,7 @@ public class PersonFacadeTest {
 
     @Test
     public void testAddRole() throws Exception {
+        // this test is causing our RoleSchool class to not be abstract(?)
         Person person = facade.addPerson(gson.toJson(new Person("bbb", "bbb", "bbb", "bbb")));
         RoleSchool role = new Teacher("Physics");
         role.setRoleName("Teacher");
