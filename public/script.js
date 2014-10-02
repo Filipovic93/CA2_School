@@ -6,13 +6,36 @@ $(document).ready(function () {
     initAddBtn();
     initCancelBtn();
     initSaveBtn();
-    initEditBtn();
+    showRole();
+    roleevent();
 
 });
 
-function initEditBtn() {
-    $("#btn_edit").click(function () {
-        initDetails(true); 
+function showRole() {
+    $("#btn_addrole").click(function () {
+        $("#roleform").removeAttr("hidden");
+        $("#roletxt").removeAttr("hidden");
+        $("#btn_saverole").removeAttr("style"); 
+    });
+}
+
+
+function roleevent() {
+    $("#roleform").click(function(e){
+       var selected = e.options[e.selectedIndex].text;
+       if(selected === "Teacher")
+       {
+        $("#rolelabel").text("Degree");
+        
+    }
+       if($("#roleform").val === "Student")
+       {
+           $("#rolelabel").text("Semester");
+       }
+       if($("#roleform").valueOf() === "AssistentTeacher")
+       {
+        $("#roletxt").hide();    
+    }
     });
 }
 
@@ -138,7 +161,7 @@ function updateDetails(id) {
         $("#role").val(roleStr);
     });
     $("#delete").removeAttr("disabled");
-    $("#btn_edit").removeAttr("disabled");
+    $("#btn_addrole").removeAttr("disabled");
 }
 
 function fetchAll() {

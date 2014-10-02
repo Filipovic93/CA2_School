@@ -24,7 +24,7 @@
         </select>
         <div>
           <button id="delete" class="btn btn-danger" disabled="disabled">Delete Selected</button>
-          <button id="btn_edit" class="btn btn-default" disabled="disabled">Edit Selected</button>
+          <button id="btn_addrole" class="btn btn-default" disabled="disabled">Add role to selected</button>
         </div>
       </div>
       <div id="details">
@@ -41,6 +41,16 @@
         <button id="btn_save" class="btn btn-default" disabled="disabled">Save Person</button>
         <button id="btn_cancel" class="btn btn-warning" disabled="disabled">Cancel</button>
       </div>
+        <form id="roleform" hidden action="demo_form.asp" method="get">
+       <input list="browsers">
+        <datalist id="browsers">
+   <option value="Teacher">
+   <option value="Student">
+   <option value="AssistentTeacher">
+</datalist> 
+      </form>
+        <div><label id="rolelabel"></label><input hidden="" id="roletxt" type = "text"></div>
+         <button style="display: none;" id="btn_saverole" class="btn btn-success" >Save role</button>
       <div>
           <br>
           <br>
