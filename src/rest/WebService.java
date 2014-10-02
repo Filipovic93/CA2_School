@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import entity.Person;
+import entity.RoleSchool;
 import exceptions.NotFoundException;
 import facades.PersonFacade;
 import java.io.BufferedInputStream;
@@ -19,6 +20,8 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,6 +44,7 @@ public class WebService
         server.createContext("/person", createPersonHandler());
         server.createContext("/files", createFileHandler());
         server.createContext("/", createStartpageHandler());
+        server.createContext("/role", createRoleHandler());
         facade = PersonFacade.getFacade();
 
     }
@@ -99,13 +103,13 @@ public class WebService
                             String jsonQuery = br.readLine();
                             if (jsonQuery.contains("<") || jsonQuery.contains(">"))
                             {
-                                //Simple anti-Martin check :-)
+                                
                                 throw new IllegalArgumentException("Illegal characters in input");
                             }
                             Person p = facade.addPerson(jsonQuery);
                             if (p.getPhone().length() > 50 || p.getFirstName().length() > 50 || p.getLastName().length() > 70)
                             {
-                                //Simple anti-Martin check :-)
+                                
                                 throw new IllegalArgumentException("Input contains to many characters");
                             }
                             response = new Gson().toJson(p);
@@ -275,5 +279,67 @@ public class WebService
         {
             responseBody.write(message.getBytes());
         }
+    }
+
+    private HttpHandler createRoleHandler()
+    {
+        return new HttpHandler()
+        {
+            @Override
+            public void handle(HttpExchange he) throws IOException
+            {
+                String response = "";
+                int status = 200;
+                String method = he.getRequestMethod().toUpperCase();
+                switch (method)
+                {
+                    case "GET":
+                        break;
+                    case "POST":
+                        try
+                        {
+                            InputStreamReader isr = new InputStreamReader(he.getRequestBody(), "utf-8");
+                            BufferedReader br = new BufferedReader(isr);
+                            String jsonQuery = br.readLine();
+                            if (jsonQuery.contains("<") || jsonQuery.contains(">"))
+                            {
+
+                                throw new IllegalArgumentException("Illegal characters in input");
+                            }
+                            String path = he.getRequestURI().getPath();
+                            int lastIndex = path.lastIndexOf("/");
+                            if (lastIndex > 0)
+                            {  //role/id
+                                String idStr = path.substring(lastIndex + 1);
+                                int id = Integer.parseInt(idStr);
+                                RoleSchool role = facade.addRole(jsonQuery, id); 
+                                response = new Gson().toJson(role);
+                            }
+                        } catch (IllegalArgumentException iae)
+                        {
+                            status = 400;
+                            response = iae.getMessage();
+                        } catch (IOException e)
+                        {
+                            status = 500;
+                            response = "Internal Server Problem";
+                        } catch (NotFoundException ex)
+                {
+                    Logger.getLogger(WebService.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                        break;
+                    case "PUT":
+                        break;
+                    case "DELETE":
+                        break;
+                }
+                he.getResponseHeaders().add("Content-Type", "application/json");
+                he.sendResponseHeaders(status, 0);
+                try (OutputStream os = he.getResponseBody())
+                {
+                    os.write(response.getBytes());
+                }
+            }
+        };
     }
 }
