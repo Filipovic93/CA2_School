@@ -88,6 +88,7 @@ public class PersonFacade implements IPersonFacade {
         } else if (roleName.equalsIgnoreCase("AssistentTeacher")) {
             role = new AssistentTeacher();
         }
+        role.setRoleName(roleName);
         Person p = em.find(Person.class, id);
         if (p == null) {
             throw new NotFoundException("No person exists for the given id");

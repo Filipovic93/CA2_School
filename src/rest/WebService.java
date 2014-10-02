@@ -264,6 +264,7 @@ public class WebService {
                                 String idStr = path.substring(lastIndex + 1);
                                 int id = Integer.parseInt(idStr);
                                 RoleSchool role = facade.addRole(jsonQuery, id);
+                                status = 200;
                                 response = new Gson().toJson(role);
                             }
                         } catch (IllegalArgumentException iae) {
