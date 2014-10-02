@@ -17,11 +17,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,8 +28,8 @@ public class WebService {
 
     private final HttpServer server;
 
-    private PersonFacade facade;
-    private String contentFolder = "public/";
+    private final PersonFacade facade;
+    private final String contentFolder = "public/";
 
     public WebService(int port) throws IOException {
         server = HttpServer.create();

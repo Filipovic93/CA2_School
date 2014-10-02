@@ -2,74 +2,76 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
-    <title>CA2_School</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">   
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <head>
+        <title>CA2_School</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">   
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="http://localhost:8080/files/style.css">
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.0.js"></script>
+        <script src="http://localhost:8080/files/script.js"></script>
+    </head>
+    <body>
+        <div id="outer">
+            <div class="jumbotron">
+                <h1>Welcome to CA2_School</h1>
+                <p>This is a website created by Vuk, Damjan, Youssef and Jakob from the a-class.</p>
+            </div>
+            <div class="col-md-4">
+                <div id="all_persons">
+                    <select id="persons" size="2" style="min-width: 150px;height: 200px;">
+                    </select>
+                    <div>
+                        <button id="delete" class="btn btn-danger" disabled="disabled">Delete Selected</button>
+                        <button id="btn_addrole" class="btn btn-default" disabled="disabled">Add role to selected</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="details">
+                    <div><label>id#</label><input id="id" disabled="disabled" type="text"/></div>
+                    <div><label>First Name</label><input id="fname" disabled="disabled" type="text"/></div>
+                    <div><label>Last Name</label><input id="lname" disabled="disabled" type="text"/></div>
+                    <div><label>Phone</label><input id="phone" disabled="disabled" type="text"/></div>
+                    <div><label>Email</label><input id="email" disabled="disabled" type="text"/></div>
+                    <div><label>Role</label><input id="role" disabled="disabled" type="text"/></div>
 
-    <link rel="stylesheet" href="http://localhost:8080/files/bootstrap.min.css"> <!-- samme som forrige style sheet -->
-    <link rel="stylesheet" type="text/css" href="http://localhost:8080/files/style.css">
-    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.0.js"></script>
-    <script src="http://localhost:8080/files/script.js"></script>
-  </head>
-  <body>
-    <div id="outer">
-        <div class="jumbotron">
-        <h1>Welcome to CA2_School</h1>
-        <p>This is a website created by Vuk, Damjan, Youssef and Jakob from the a-class.</p>
-    </div>
-      <div id="all_persons">
-        <select id="persons" size="2" style="min-width: 150px;height: 200px;">
-        </select>
-        <div>
-          <button id="delete" class="btn btn-danger" disabled="disabled">Delete Selected</button>
-          <button id="btn_addrole" class="btn btn-default" disabled="disabled">Add role to selected</button>
+                </div>
+                <div>
+                    <button id="btn_add" class="btn btn-success">Add Person</button>
+                    <button id="btn_save" class="btn btn-default" disabled="disabled">Save Person</button>
+                    <button id="btn_cancel" class="btn btn-warning" disabled="disabled">Cancel</button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="roleform" hidden="">
+                    <select id="dropdown">
+                        <option>Teacher</option>
+                        <option>Student</option>
+                        <option>AssistentTeacher</option>
+                    </select> 
+                    <input id="roletxt" type="text" placeholder="Enter degree">
+                    <button id="btn_saverole" class="btn btn-success" >Save role</button>
+                </div>
+
+            </div>
+            <br>
+            <br>
+            <br>
+
         </div>
-      </div>
-      <div id="details">
-        <div><label>id#</label><input id="id" disabled="disabled" type="text"/></div>
-        <div><label>First Name</label><input id="fname" disabled="disabled" type="text"/></div>
-        <div><label>Last Name</label><input id="lname" disabled="disabled" type="text"/></div>
-        <div><label>Phone</label><input id="phone" disabled="disabled" type="text"/></div>
-        <div><label>Email</label><input id="email" disabled="disabled" type="text"/></div>
-        <div><label>Role</label><input id="role" disabled="disabled" type="text"/></div>
-
-      </div>
-      <div>
-        <button id="btn_add" class="btn btn-success">Add Person</button>
-        <button id="btn_save" class="btn btn-default" disabled="disabled">Save Person</button>
-        <button id="btn_cancel" class="btn btn-warning" disabled="disabled">Cancel</button>
-      </div>
-        <form id="roleform" hidden action="demo_form.asp" method="get">
-       <input list="browsers">
-        <datalist id="browsers">
-   <option value="Teacher">
-   <option value="Student">
-   <option value="AssistentTeacher">
-</datalist> 
-      </form>
-        <div><label id="rolelabel"></label><input hidden="" id="roletxt" type = "text"></div>
-         <button style="display: none;" id="btn_saverole" class="btn btn-success" >Save role</button>
-      <div>
-          <br>
-          <br>
-          <br>
-          
-      </div>
-    </div>
         <div class="col-md-4">
-        <p>Below is a documentation for the ChatProgram:
-            <br>
-            <a href="Documentation" class="btn btn-default">Documentation</a>
-        </p>
-    </div>
-      <div class="col-md-4">
-        <p>And here is the link for the source code on GitHub:
-            <br>
-            <a href="https://github.com/Filipovic93/CA2_School" class="btn btn-default">Source code</a>
-        </p>
-    </div>
-      
-  </body>
+            <p>Below is a documentation for the ChatProgram:
+                <br>
+                <a href="Documentation" class="btn btn-default">Documentation</a>
+            </p>
+        </div>
+        <div class="col-md-4">
+            <p>And here is the link for the source code on GitHub:
+                <br>
+                <a href="https://github.com/Filipovic93/CA2_School" class="btn btn-default">Source code</a>
+            </p>
+        </div>
+
+    </body>
 </html>
