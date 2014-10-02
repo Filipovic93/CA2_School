@@ -5,24 +5,30 @@
   <head>
     <title>CA2_School</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" type="text/css" href="http://localhost:8080/files/style.css">
+    <meta name="viewport" content="width=device-width">   
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="bootstrap.min.css"> <!-- samme som forrige style sheet -->
+    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.0.js"></script>
     <script src="http://localhost:8080/files/script.js"></script>
   </head>
   <body>
     <div id="outer">
-        <div id="header"><h1>CA2_School</h1></div>
+        <div class="jumbotron">
+        <h1>Welcome to CA2_School</h1>
+        <p>This is a website created by Vuk, Damjan, Youssef and Jakob from the a-class.</p>
+    </div>
       <div id="all_persons">
         <select id="persons" size="2" style="min-width: 150px;height: 200px;">
         </select>
         <div>
           <button id="delete" class="btn btn-danger">Delete Selected</button>
+          <button id="btn_add" class="btn btn-default">Edit Selected</button>
         </div>
       </div>
       <div id="details">
-        <div><label>id</label><input id="id" disabled="disabled" type="text"/></div>
+        <div><label>id#</label><input id="id" disabled="disabled" type="text"/></div>
         <div><label>First Name</label><input id="fname" disabled="disabled" type="text"/></div>
         <div><label>Last Name</label><input id="lname" disabled="disabled" type="text"/></div>
         <div><label>Phone</label><input id="phone" disabled="disabled" type="text"/></div>
@@ -35,6 +41,25 @@
         <button id="btn_cancel" class="btn btn-warning" disabled="disabled">Cancel</button>
       </div>
       <p>TODO: Add the edit functionality </p>
+      <div>
+          <br>
+          <br>
+          <br>
+          
+      </div>
     </div>
+        <div class="col-md-4">
+        <p>Below is a documentation for the ChatProgram:
+            <br>
+            <a href="Documentation" class="btn btn-default">Documentation</a>
+        </p>
+    </div>
+      <div class="col-md-4">
+        <p>And here is the link for the source code on GitHub:
+            <br>
+            <a href="https://github.com/Filipovic93/CA2_School" class="btn btn-default">Source code</a>
+        </p>
+    </div>
+      
   </body>
 </html>
