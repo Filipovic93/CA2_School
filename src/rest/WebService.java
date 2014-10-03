@@ -31,9 +31,9 @@ public class WebService {
     private final PersonFacade facade;
     private final String contentFolder = "public/";
 
-    public WebService(int port) throws IOException {
+    public WebService(String ip, int port) throws IOException {
         server = HttpServer.create();
-        server.bind(new InetSocketAddress(port), 0);
+        server.bind(new InetSocketAddress(ip, port), 0);
         server.createContext("/person", createPersonHandler());
         server.createContext("/files", createFileHandler());
         server.createContext("/", createStartpageHandler());
